@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Gemini via the OpenAI-compatible endpoint (same pattern as your smoke test & reference)
+# Gemini via the OpenAI-compatible endpoint 
 client = OpenAI(
     api_key=os.getenv("GEMINI_API_KEY"),
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"

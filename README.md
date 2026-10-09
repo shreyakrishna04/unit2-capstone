@@ -40,7 +40,7 @@ User Query (CLI)
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Add your API key to a .env file (never commit this file)
+# 2. Add  API key to a .env file 
 echo "GEMINI_API_KEY=your_key_here" > .env
 
 # 3. Seed the database (if not already present)
@@ -53,11 +53,10 @@ Type a question at the prompt. The manager classifies each query and routes it:
 qualitative (document search), quantitative (SQL + database), or both (multi-agent). Model: gemini-3.5-flash-lite. 
 
 Example: Show me monthly revenue trends
-
-
+```
 ## Trust-but-Verify
 
-### Query 1 — Qualitative (document search)
+## Query 1 — Qualitative (document search)
 **Query submitted:** "What is our company's security policy?"
 
 **Route chosen:** `qualitative` — the classifier correctly identified this as a
@@ -129,7 +128,6 @@ Returned 2024 monthly revenue: a peak in July ($17,940), a secondary peak in Oct
 **Outcome:** The validation layer caught a confidently-wrong "no data" result before
 it could be trusted, and the prompt fix produced a correct, verified answer.
 
-
 ### Query 4 — Complex / multi-agent (both routes)
 **Query submitted:** "How does our employee satisfaction compare to industry
 standards and what policies might impact this?"
@@ -162,9 +160,7 @@ averages, not any causal driver. The agent even flagged part of this itself, not
 "the database does not contain external benchmark data." Resolution: I kept the
 numeric averages and the cited policy facts, but treated the causal policy
 explanations as hypotheses, not findings, and would not present them as data-backed
-conclusions without further evidence. The validation layer passed this because the SQL
-ran correctly — a reminder that passing validation confirms the SQL is valid, not that
-every sentence of the model's prose is grounded.
+conclusions without further evidence. The validation layer passed this because the SQL ran correctly — a reminder that passing validation confirms the SQL is valid, not that every sentence of the model's prose is grounded.
 
 ### Query 5 — Quantitative (SQL + data)
 **Query submitted:** "What is our customer churn rate?"
@@ -179,15 +175,9 @@ one-third of recorded customers have a non-null churn_date.
             / COUNT(*)) * 100 AS churn_rate
     FROM customers;
 
-**What the validation layer flagged:** Nothing. The query is a valid SELECT, executed
-successfully, so the quantitative validator passed it with no warning.
+**What the validation layer flagged:** Nothing. The query is a valid SELECT, executed successfully, so the quantitative validator passed it with no warning.
 
-**What I accepted / changed, and why:** I accepted the SQL and the 33.33% figure — the
-logic is correct for the definition it used (share of all-time customers with any churn
-date). I noted one caveat for interpretation: this is a cumulative all-time churn ratio,
-NOT a period-based rate (e.g. monthly/annual churn), because the query divides total
-churned by total customers with no time window. The number is correct for what was
-computed; I would clarify the definition before using it as a KPI.
+**What I accepted / changed, and why:** I accepted the SQL and the 33.33% figure — the logic is correct for the definition it used (share of all-time customers with any churn date). 
 
 ### Query 6 — Quantitative (SQL + data)
 **Query submitted:** "Compare Q4 performance across regions"
@@ -210,11 +200,7 @@ quantitative validator passed with no warning. (Note: this query also confirmed 
 SQLite dialect fix from Query 3 is working — it correctly used strftime, not DATE_TRUNC.)
 
 **What I accepted / changed, and why:** I accepted the figures and ranking — the SQL
-correctly sums revenue/units by region for the Oct–Dec window. One caveat I noted on
-verification: the WHERE clause filters months 10–12 across ALL years in the table,
-not a single fiscal year's Q4. If the data spans multiple years this would blend them.
-For this synthetic single-year dataset it's correct, but I'd add a year filter before
-using it on multi-year data.
+correctly sums revenue/units by region for the Oct–Dec window. 
 
 ### Query 7 — Qualitative (document search)
 **Query submitted:** "How do we handle customer complaints?"
@@ -246,11 +232,8 @@ based on our customer success strategies"
 **What the model returned:**
 - *Qualitative half:* Grounded, honest partial answer — it reported that regional
   sales are reviewed jointly with Customer Success and that churn/complaint data is
-  shared with Sales [Source 1], then explicitly stated "the provided context does not
-  outline specific policy changes for sales... I cannot find any other specific sales
-  policy recommendations." It did not invent policy that wasn't in the docs.
-- *Quantitative half:* All of total_revenue, total_units_sold and revenue_per_customer
-  came back as NULL. The agent itself diagnosed the cause: the SQL used
+  shared with Sales [Source 1], then explicitly stated "the provided context does not outline specific policy changes for sales... I cannot find any other specific sales policy recommendations." It did not invent policy that wasn't in the docs.
+- *Quantitative half:* All of total_revenue, total_units_sold and revenue_per_customer came back as NULL. The agent itself diagnosed the cause: the SQL used
   `LEFT JOIN sales s ON c.name = s.product` — joining customer NAME to product NAME,
   which never matches. It still produced satisfaction/churn figures (Technology best:
   4.33, zero churn; Healthcare worst: 2.57, 2 of 3 churned) and recommendations.
@@ -260,18 +243,8 @@ SELECT and executed without error — it simply returned NULLs. The validator ch
 blocked keywords and execution errors, so a query that "succeeds" but is logically
 wrong passes straight through with no warning.
 
-**Why I did not trust it, and how I resolved it:** This is the clearest example of why
-validation-passing is not the same as trustworthy. The revenue analysis was built on a
-broken join (`c.name = s.product` is meaningless — there is no key relating customers to
-sales in the schema). I did NOT accept any revenue/ROI claim. I DID accept the
-satisfaction/churn-by-industry figures, which came from the valid `customers`-only
-columns, and I accepted the qualitative half because it was cited and honestly admitted
-its limits. Notably, the model self-flagged the NULLs rather than hiding them — but I
-treated that as a prompt-for-verification, not a free pass. Resolution: I confirmed from
-the schema that `sales` has no customer foreign key at all, so sales cannot currently be
-attributed to a customer/industry; the "fix the join" recommendation is not achievable
-without a schema change. I recorded the revenue analysis as INVALID and kept only the
-satisfaction/churn insights.
+**Why I did not trust it, and how I resolved it:** The revenue analysis was built on a broken join (`c.name = s.product` is meaningless — there is no key relating customers to sales in the schema). I did NOT accept any revenue/ROI claim. I DID accept the satisfaction/churn-by-industry figures, which came from the valid `customers`-only columns, and I accepted the qualitative half because it was cited and honestly admitted its limits. Resolution: I confirmed from
+the schema that `sales` has no customer foreign key at all, so sales cannot currently be attributed to a customer/industry; the "fix the join" recommendation is not achievable without a schema change. 
 
 ### Conversation history
 
@@ -280,11 +253,7 @@ in a module-level list in `manager.py` (`_HISTORY`), which survives across `run(
 calls without touching `main.py`, and only the last 5 turns are held onto so the
 re-sent context doesn't balloon the token count. The answering agents see the whole
 exchange — questions and answers — so something like "why?" still makes sense, while
-the classifier only needs the earlier questions to figure out routing. One thing to
-watch: when history feeds into SQL generation, the model can keep the subject of a
-follow-up but quietly drop a filter from the original question (see Q9), so it's worth
-sanity-checking chained results against what was first asked.
-
+the classifier only needs the earlier questions to figure out routing. 
 
 ### Token optimization: trimming classifier context
 The manager's classifier only needs prior **topics** to route a follow-up, not the
