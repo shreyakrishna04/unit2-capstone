@@ -1,6 +1,7 @@
 # unit2-capstone
 
 ## Architecture Diagram
+```
 User Query (CLI)
       │
       ▼
@@ -15,7 +16,7 @@ User Query (CLI)
 │ • Vector DB      │    │ • SQLite DB        │
 │   (ChromaDB)     │    │ • NL → SQL         │
 │ • Semantic search│    │ • Query execution  │
-│ • Claude for     │    │ • Claude for       │
+│ • Gemini for     │    │ • Gemini for       │
 │   generation     │    │   interpretation   │
 └──────────────────┘    └───────────────────┘
       │                          │
@@ -32,7 +33,7 @@ User Query (CLI)
                  │
                  ▼
         Response to User
-
+```
 ## Setup and Usage Instructions
 
 ```bash
