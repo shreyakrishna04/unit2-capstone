@@ -1,0 +1,49 @@
+SPOONFUL, INC. — PLATFORM TECHNICAL SPECIFICATION
+Document owner: Principal Architect
+Classification: Internal
+Last reviewed: October 2025
+
+SYSTEM OVERVIEW
+The Spoonful platform is a multi-tenant B2B SaaS application delivered through a
+web client and a public API. The system is organized as a set of independently
+deployable services communicating over internal APIs and an event bus.
+
+ARCHITECTURE
+The platform follows a service-oriented architecture. Core services include the
+identity service, the billing service, the reporting service, and the
+integration service. Each service owns its own data store and exposes a
+versioned REST API. Services communicate asynchronously through a message queue
+for events that do not require an immediate response.
+
+DATA STORAGE
+Transactional data is stored in a managed relational database. Analytical and
+reporting data is replicated to a separate reporting store so that heavy
+reporting queries do not affect production performance. All data stores enforce
+encryption at rest. Tenant data is logically isolated by a tenant identifier
+enforced at the data-access layer.
+
+API STANDARDS
+Public APIs use REST over HTTPS with JSON payloads. All API requests require an
+authenticated token and are rate-limited per tenant to protect platform
+stability. APIs are versioned; breaking changes require a new version and a
+minimum six-month deprecation window for the prior version.
+
+AVAILABILITY AND SCALING
+The platform targets 99.9 percent monthly availability. Services scale
+horizontally behind load balancers, and the system is deployed across multiple
+availability zones. Automated health checks remove unhealthy instances from
+rotation. A nightly backup and a tested restore procedure protect against data
+loss, with a recovery point objective of one hour and a recovery time objective
+of four hours.
+
+OBSERVABILITY
+Every service emits structured logs, metrics, and traces to a central
+observability platform. Alerts are defined for error-rate, latency, and
+saturation thresholds. On-call engineers follow documented runbooks for common
+alerts.
+
+SECURITY CONTROLS
+Security is enforced in depth: network segmentation between services,
+least-privilege service accounts, automated dependency scanning in the CI/CD
+pipeline, and mandatory code review for all changes. Secrets are stored in a
+managed secrets vault and are never embedded in code or configuration files.

@@ -1,0 +1,47 @@
+SPOONFUL, INC. — ENGINEERING CODE REVIEW PROCESS
+Document owner: VP of Engineering
+Classification: Internal
+Last reviewed: November 2025
+
+OVERVIEW
+Code review is a mandatory quality gate at Spoonful. No code reaches the main
+branch or production without review and approval. The process exists to catch
+defects early, share knowledge across the team, and maintain a consistent,
+secure codebase.
+
+PULL REQUEST REQUIREMENTS
+All changes are submitted as a pull request (PR) against the main branch. A PR
+must include a clear description of what changed and why, a link to the related
+ticket, and evidence that automated tests pass. PRs should be small and focused;
+the target is under 400 lines of changed code. Large PRs are returned to the
+author to be split.
+
+REVIEWER ASSIGNMENT
+Every PR requires at least one approving review from an engineer other than the
+author. Changes to security-sensitive areas — authentication, authorization,
+payment handling, or data encryption — require two approvals, one of which must
+come from a senior engineer. The CODEOWNERS file determines required reviewers
+for protected directories.
+
+WHAT REVIEWERS CHECK
+Reviewers assess correctness, readability, test coverage, and security.
+Reviewers confirm that new logic has tests, that error cases are handled, that
+no secrets or credentials are committed, and that the change does not introduce
+known vulnerable dependencies. Style issues are handled by automated linters,
+not manual review, so reviewers focus on substance.
+
+SERVICE-LEVEL EXPECTATIONS
+Reviewers are expected to provide first feedback within one business day.
+Authors are expected to respond to review comments within one business day.
+Blocking disagreements are escalated to the team lead rather than left to stall.
+
+MERGING AND DEPLOYMENT
+Once approved and all checks pass, the author merges the PR. Deployment to
+production occurs through the automated CI/CD pipeline. Hotfixes follow the same
+review process but may use an expedited single-senior-approval path with a
+retrospective review within 24 hours.
+
+CONTINUOUS IMPROVEMENT
+Review practices are revisited each quarter in the engineering retrospective.
+Metrics such as time-to-first-review and defect-escape rate are tracked to
+identify bottlenecks.

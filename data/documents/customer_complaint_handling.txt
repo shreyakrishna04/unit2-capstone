@@ -1,0 +1,46 @@
+SPOONFUL, INC. — CUSTOMER COMPLAINT HANDLING PROCEDURE
+Document owner: Director of Customer Success
+Classification: Internal
+Last reviewed: February 2026
+
+PURPOSE
+This procedure ensures every customer complaint is captured, acknowledged,
+resolved, and learned from. It applies to all customer-facing teams, including
+Support, Customer Success, and Sales.
+
+INTAKE CHANNELS
+Complaints may arrive through the support portal, email, in-app feedback, or
+directly to an account manager. Regardless of channel, every complaint is logged
+in the support system as a case with a severity rating. No complaint is handled
+informally or left unlogged.
+
+SEVERITY LEVELS
+Complaints are triaged into three severity levels. Severity 1 (critical) covers
+service outages or data issues affecting production use. Severity 2 (major)
+covers significant functionality problems with a workaround. Severity 3 (minor)
+covers general dissatisfaction, usability friction, or feature requests.
+
+ACKNOWLEDGEMENT AND RESOLUTION TARGETS
+Severity 1 complaints are acknowledged within one hour and worked continuously
+until resolved, with a target resolution of four hours. Severity 2 complaints
+are acknowledged within four business hours with a target resolution of two
+business days. Severity 3 complaints are acknowledged within one business day
+with a target resolution of five business days.
+
+ESCALATION
+If a complaint cannot be resolved within its target, it is escalated to the team
+lead, and for Severity 1, to the Director of Customer Success and the engineering
+on-call. Any complaint from an enterprise-tier customer is automatically copied
+to the assigned account manager.
+
+CLOSING THE LOOP
+Before a case is closed, the customer confirms the resolution is satisfactory.
+The owner records the root cause and whether the issue was a product defect, a
+process gap, or a misunderstanding. Cases closed without customer confirmation
+are reopened automatically after follow-up.
+
+LEARNING FROM COMPLAINTS
+Complaint data is reviewed monthly by Customer Success leadership. Recurring
+themes are shared with Product and Engineering to drive fixes. A rise in
+Severity 1 or Severity 2 volume for any product line is treated as an early
+warning signal for churn risk and triggers a dedicated review.

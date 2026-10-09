@@ -1,0 +1,54 @@
+SPOONFUL, INC. — INFORMATION SECURITY POLICY
+Document owner: Chief Information Security Officer (CISO)
+Classification: Internal
+Last reviewed: January 2026
+
+PURPOSE
+This policy defines how Spoonful protects the confidentiality, integrity, and
+availability of company and customer information. It applies to all employees,
+contractors, and third parties who access Spoonful systems or data.
+
+ACCESS CONTROL
+Access to systems is granted on a least-privilege basis. Every employee receives
+only the access required for their role. Access is reviewed quarterly by the
+system owner and the employee's manager. Privileged (administrator) access
+requires CISO approval and is reviewed monthly. All access is revoked within
+four hours of an employee's departure.
+
+AUTHENTICATION
+Multi-factor authentication (MFA) is mandatory for all corporate accounts,
+including email, source control, cloud consoles, and the customer production
+environment. Passwords must be at least 14 characters and are managed through
+the approved enterprise password manager. Shared accounts are prohibited.
+
+DATA CLASSIFICATION
+Spoonful classifies data into four tiers: Public, Internal, Confidential, and
+Restricted. Customer data and personal data are always treated as Restricted.
+Restricted data must be encrypted in transit (TLS 1.2 or higher) and at rest
+(AES-256). Restricted data may never be copied to personal devices or
+unapproved cloud storage.
+
+INCIDENT RESPONSE
+Any suspected security incident must be reported to the Security Operations
+Center within one hour of discovery via the #security-incident channel or the
+security hotline. The incident response team follows a four-phase process:
+identify, contain, eradicate, recover. A post-incident review is completed
+within five business days for every confirmed incident. Customers affected by a
+confirmed data breach are notified within 72 hours in line with regulatory
+requirements.
+
+ACCEPTABLE USE
+Company systems are provided for business use. Employees must not disable
+security controls, install unapproved software, or attempt to access data
+outside their authorization. Violations may result in disciplinary action up to
+and including termination.
+
+THIRD-PARTY RISK
+All vendors handling Spoonful data must complete a security assessment before
+onboarding and annually thereafter. Vendors handling Restricted data must
+provide a current SOC 2 Type II report.
+
+POLICY REVIEW
+This policy is reviewed at least annually by the CISO and approved by the
+executive risk committee. Exceptions require documented CISO approval with a
+defined expiry date.

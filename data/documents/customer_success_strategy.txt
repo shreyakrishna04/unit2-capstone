@@ -1,0 +1,48 @@
+SPOONFUL, INC. — CUSTOMER SUCCESS STRATEGY
+Document owner: VP of Customer Success
+Classification: Internal
+Last reviewed: January 2026
+
+STRATEGIC INTENT
+Spoonful's customer success strategy is built on a simple premise: retained and
+expanding customers drive more durable revenue than new logos alone. The
+strategy focuses on reducing churn, increasing product adoption, and growing
+revenue within the existing customer base.
+
+CUSTOMER SEGMENTATION
+Customers are segmented into three tiers. Enterprise accounts receive a named
+Customer Success Manager (CSM) and a quarterly business review. Mid-market
+accounts share a pooled CSM team and receive a semi-annual review. Self-serve
+accounts are supported through in-product guidance, webinars, and a help center.
+Investment is concentrated where revenue and churn risk are highest.
+
+HEALTH SCORING
+Every account carries a health score based on product usage, support case
+history, satisfaction score, and payment timeliness. Accounts with declining
+usage or a falling satisfaction score are flagged as at-risk and enter a defined
+recovery playbook. A satisfaction score below 3.0 is treated as a strong churn
+predictor and triggers immediate CSM outreach.
+
+ONBOARDING
+The first 90 days determine long-term retention. Every new customer follows a
+structured onboarding plan with defined success milestones. Customers who reach
+their first value milestone within 30 days churn at a markedly lower rate, so
+onboarding speed is a tracked metric.
+
+REDUCING CHURN
+Churn is managed proactively rather than reactively. The team monitors leading
+indicators — login frequency, feature adoption, and open complaint volume —
+rather than waiting for a renewal date. Industries with historically higher
+churn receive additional touchpoints and tailored adoption content.
+
+EXPANSION
+Expansion revenue comes from seat growth and upsell into additional product
+lines. CSMs identify expansion opportunities during business reviews, and
+expansion is only pursued once an account is healthy. Pushing expansion on an
+unhealthy account is explicitly discouraged, as it accelerates churn.
+
+ALIGNMENT WITH SALES AND PRODUCT
+Customer Success shares churn-reason and complaint data with Sales to improve
+qualification and with Product to prioritize the roadmap. Regional sales
+performance is reviewed jointly so that strong-selling regions receive the
+success capacity needed to retain what they win.

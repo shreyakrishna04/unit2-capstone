@@ -1,0 +1,9 @@
+{"timestamp": "2026-10-08T15:26:02.334283", "query": "What is total revenue by region?", "agent": "manager-classifier", "input_tokens": 85, "output_tokens": 1, "cost_usd": 2.8e-05, "cost_per_1000_queries": 0.03}
+{"timestamp": "2026-10-08T15:26:25.394501", "query": "What is total revenue by region?", "agent": "quantitative", "input_tokens": 202, "output_tokens": 162, "cost_usd": 0.000466, "cost_per_1000_queries": 0.47}
+{"timestamp": "2026-10-08T15:26:51.998688", "query": "What is the remote work policy?", "agent": "manager-classifier", "input_tokens": 85, "output_tokens": 2, "cost_usd": 3e-05, "cost_per_1000_queries": 0.03}
+{"timestamp": "2026-10-08T15:27:02.654025", "query": "What is the remote work policy?", "agent": "qualitative", "input_tokens": 2399, "output_tokens": 10, "cost_usd": 0.000745, "cost_per_1000_queries": 0.74}
+{"timestamp": "2026-10-08T15:27:59.684157", "query": "How does revenue relate to our pricing policy?", "agent": "manager-classifier", "input_tokens": 87, "output_tokens": 1, "cost_usd": 2.9e-05, "cost_per_1000_queries": 0.03}
+{"timestamp": "2026-10-08T15:28:11.126864", "query": "How does revenue relate to our pricing policy?", "agent": "qualitative", "input_tokens": 2370, "output_tokens": 10, "cost_usd": 0.000736, "cost_per_1000_queries": 0.74}
+{"timestamp": "2026-10-08T15:28:33.343209", "query": "How does revenue relate to our pricing policy?", "agent": "quantitative", "input_tokens": 306, "output_tokens": 289, "cost_usd": 0.000814, "cost_per_1000_queries": 0.81}
+{"timestamp": "2026-10-08T15:32:41.822973", "query": "\"What is our company's security policy?", "agent": "manager-classifier", "input_tokens": 88, "output_tokens": 2, "cost_usd": 3.1e-05, "cost_per_1000_queries": 0.03}
+{"timestamp": "2026-10-08T15:32:51.914600", "query": "\"What is our company's security policy?", "agent": "qualitative", "input_tokens": 2400, "output_tokens": 461, "cost_usd": 0.001873, "cost_per_1000_queries": 1.87}
