@@ -1,9 +1,11 @@
 # filename: agents/qualitative.py
+
 import os
 import chromadb
 from openai import OpenAI
 from sentence_transformers import SentenceTransformer
 from dotenv import load_dotenv
+
 load_dotenv()
 
 # Gemini via the OpenAI-compatible endpoint (same pattern as your smoke test & reference)
@@ -29,11 +31,13 @@ def retrieve(query: str, top_k: int = 5) -> list[dict]:
     ]
 
 
-def build_prompt(query: str, chunks: list[dict]) -> str:
+def build_prompt(query: str, chunks: list[dict], history_context: str = "") -> str:
     context = ""
     for i, chunk in enumerate(chunks):
         context += f"[Source {i+1}: {chunk['source']}]\n{chunk['content']}\n\n"
 
+    # history_context sits after CONTEXT so retrieved docs stay the primary
+    # grounding source and citations aren't displaced by prior conversation.
     return f"""You are a helpful enterprise documentation assistant.
 Answer the question using ONLY the context provided below.
 If the answer is not in the context, say "I cannot find this information in the provided documents."
@@ -42,14 +46,14 @@ Always cite the source number(s) you used.
 CONTEXT:
 {context}
 
-QUESTION: {query}
+{history_context}QUESTION: {query}
 
 ANSWER:"""
 
 
-def run(query: str) -> dict:
+def run(query: str, history_context: str = "") -> dict:
     chunks = retrieve(query)
-    prompt = build_prompt(query, chunks)
+    prompt = build_prompt(query, chunks, history_context)
     response = client.chat.completions.create(
         model="gemini-3.5-flash-lite",
         max_tokens=1024,

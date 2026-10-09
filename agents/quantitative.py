@@ -1,8 +1,10 @@
 # filename: agents/quantitative.py
+
 import os
 import sqlite3
 from openai import OpenAI
 from dotenv import load_dotenv
+
 load_dotenv()
 
 client = OpenAI(
@@ -17,6 +19,9 @@ Do NOT use PostgreSQL functions such as DATE_TRUNC.
 For grouping by month, use strftime('%Y-%m', date).
 For grouping by year, use strftime('%Y', date).
 
+If the request is a follow-up to a previous question, carry over any filters
+from that question (time period, etc.) unless the user explicitly changes them.
+
 Available tables:
 - sales(id, region, product, revenue, date, units_sold)
 - customers(id, name, industry, churn_date, satisfaction_score)
@@ -26,27 +31,30 @@ Available tables:
 
 def validate_sql(query: str) -> dict:
     blocked = ["DROP", "DELETE", "UPDATE", "INSERT", "ALTER", "TRUNCATE"]
+    upper = query.upper()
     for word in blocked:
-        if word in query.upper():
+        if word in upper:
             return {"valid": False, "reason": f"Blocked keyword: {word}"}
-    if not query.strip().upper().startswith("SELECT"):
-        return {"valid": False, "reason": "Only SELECT queries are permitted"}
+    # Allow plain SELECT and CTEs (WITH ... SELECT); both are read-only.
+    first = query.strip().upper()
+    if not (first.startswith("SELECT") or first.startswith("WITH")):
+        return {"valid": False, "reason": "Only SELECT/WITH queries are permitted"}
     return {"valid": True, "reason": "OK"}
 
 
-def generate_sql(query: str) -> dict:
+def generate_sql(query: str, history_context: str = "") -> dict:
     response = client.chat.completions.create(
         model="gemini-3.5-flash-lite",
-        max_tokens=256,
+        max_tokens=768,
         temperature=0.2,
         messages=[{
             "role": "user",
-            "content": f"{SCHEMA_CONTEXT}\n\nGenerate a SQL query for: {query}\n\nReturn ONLY the SQL query, nothing else."
+            "content": f"{history_context}{SCHEMA_CONTEXT}\n\nGenerate a SQL query for: {query}\n\nReturn ONLY the SQL query, nothing else."
         }]
     )
     sql = response.choices[0].message.content.strip()
     # Gemini sometimes wraps SQL in markdown fences; strip them so validate_sql
-    # sees a bare SELECT. Claude did not do this — fix added during the swap.
+    # sees a bare SELECT.
     if sql.startswith("```"):
         sql = sql.strip("`")                       # remove backticks
         if sql.lstrip().lower().startswith("sql"):
@@ -59,9 +67,8 @@ def generate_sql(query: str) -> dict:
     }
 
 
-
-def run(query: str) -> dict:
-    sql_result = generate_sql(query)
+def run(query: str, history_context: str = "") -> dict:
+    sql_result = generate_sql(query, history_context)
     sql = sql_result["sql"]
     validation = validate_sql(sql)
 
